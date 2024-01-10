@@ -1,0 +1,31 @@
+certificates:
+- name: metrostar-certificate
+  namespace: onyx
+  issuer: zerossl-prod
+  dnsNames:
+  - "onyx-dev.metrostar.cloud"
+  - "*.onyx-dev.metrostar.cloud" 
+
+issuers:
+- name: letsencrypt-prod
+  namespace: onyx
+  type: letsencrypt
+  solver:
+    type: cloudflare
+    existingSecret: cloudflare-apikey
+- name: zerossl-prod
+  namespace: onyx
+  type: zerossl
+  email: sblair@metrostar.com
+  keyId: ta5w7FuQSkZJH8Vb_SI4Gg
+  existingSecret: zerossl-eab
+  solver:
+    type: cloudflare
+    existingSecret: cloudflare-apikey
+
+cloudflare:
+  zone: metrostar.cloud
+  email: sblair@metrostarsystems.com
+
+cert-manager:
+  installCRDs: true

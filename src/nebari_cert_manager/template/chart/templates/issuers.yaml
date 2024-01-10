@@ -1,0 +1,64 @@
+{{- range .Values.issuers }}
+
+{{- if eq "cloudflare" .solver.type }}
+
+{{- if eq .type "zerossl" }}
+
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ .name }}
+  namespace: {{ .namespace }}
+spec:
+  acme:
+    server: https://acme.zerossl.com/v2/DV90
+    email: {{ .email | default $.Values.cloudflare.email | quote }}
+    privateKeySecretRef:
+      name: {{ .name }}
+    externalAccountBinding:
+      keyID: {{ .keyId }}
+      keySecretRef:
+        name: {{ .existingSecret }}
+        key: hmac-key
+    solvers:
+    - selector:
+        dnsZones:
+        - {{ $.Values.cloudflare.zone | quote }}
+      dns01:
+        cloudflare:
+          email: {{ $.Values.cloudflare.email | quote }}
+          apiTokenSecretRef:
+            name: {{ .solver.existingSecret }}
+            key: key
+
+{{- else }}
+
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ .name }}
+  namespace: {{ .namespace }}
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: {{ .email | default $.Values.cloudflare.email | quote }}
+    privateKeySecretRef:
+      name: {{ .name }}
+    solvers:
+    - selector:
+        dnsZones:
+        - {{ $.Values.cloudflare.zone | quote }}
+      dns01:
+        cloudflare:
+          email: {{ $.Values.cloudflare.email | quote }}
+          apiTokenSecretRef:
+            name: {{ .solver.existingSecret }}
+            key: key
+
+{{- end }}
+
+{{- end }}
+
+{{- end }}
