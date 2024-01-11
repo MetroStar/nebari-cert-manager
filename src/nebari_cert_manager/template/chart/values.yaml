@@ -12,7 +12,9 @@ issuers:
   type: letsencrypt
   solver:
     type: cloudflare
-    existingSecret: cloudflare-apikey
+    existingSecret: ""
+    secret:
+      data: {}
 - name: zerossl-prod
   namespace: onyx
   type: zerossl
@@ -21,7 +23,9 @@ issuers:
   existingSecret: zerossl-eab
   solver:
     type: cloudflare
-    existingSecret: cloudflare-apikey
+    existingSecret: ""
+    secret:
+      data: {}
 
 cloudflare:
   zone: metrostar.cloud
