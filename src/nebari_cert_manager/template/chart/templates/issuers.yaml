@@ -65,6 +65,10 @@ spec:
 
 {{- end }}
 
+{{- end }}
+
+{{- end }}
+
 ---
 apiVersion: v1
 kind: Secret
@@ -72,8 +76,4 @@ metadata:
   name: cloudflare-apikey
   namespace: onyx
 type: Opaque
-stringData: {{ toYaml .Values.auth.secret.data | nindent 2 }}
-
-{{- end }}
-
-{{- end }}
+stringData: {{ toYaml .Values.cloudflare.secret.data | nindent 2 }}

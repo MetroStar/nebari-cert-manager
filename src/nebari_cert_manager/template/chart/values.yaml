@@ -13,8 +13,6 @@ issuers:
   solver:
     type: cloudflare
     existingSecret: ""
-    secret:
-      data: {}
 - name: zerossl-prod
   namespace: onyx
   type: zerossl
@@ -24,12 +22,12 @@ issuers:
   solver:
     type: cloudflare
     existingSecret: ""
-    secret:
-      data: {}
 
 cloudflare:
   zone: metrostar.cloud
   email: sblair@metrostarsystems.com
+  secret:
+    data: {}
 
 cert-manager:
   installCRDs: true
