@@ -2,9 +2,7 @@ certificates:
 - name: metrostar-certificate
   namespace: onyx
   issuer: zerossl-prod
-  dnsNames:
-  - "onyx-dev.metrostar.cloud"
-  - "*.onyx-dev.metrostar.cloud" 
+  dnsNames: "<placeholder>"
 
 issuers:
 - name: letsencrypt-prod
