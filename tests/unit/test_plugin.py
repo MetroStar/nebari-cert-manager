@@ -1,4 +1,4 @@
-from src.nebari_cert_manager.plugin import CertManagerStage, CertManagerConfig, InputSchema
+from src.nebari_plugin_cert_manager_chart.plugin import CertManagerStage, CertManagerConfig, InputSchema
 
 class TestConfig(InputSchema):
     namespace: str
