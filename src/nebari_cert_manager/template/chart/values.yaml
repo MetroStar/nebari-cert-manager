@@ -26,8 +26,6 @@ issuers:
 cloudflare:
   zone: metrostar.cloud
   email: sblair@metrostarsystems.com
-  secret:
-    data: {}
 
 cert-manager:
   installCRDs: true

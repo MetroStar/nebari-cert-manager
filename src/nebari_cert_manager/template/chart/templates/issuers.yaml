@@ -76,4 +76,5 @@ metadata:
   name: cloudflare-apikey
   namespace: onyx
 type: Opaque
-stringData: {{ toYaml .Values.cloudflare.secret.data | nindent 2 }}
+stringData:
+  key: ${CLOUDFLARE_TOKEN}
