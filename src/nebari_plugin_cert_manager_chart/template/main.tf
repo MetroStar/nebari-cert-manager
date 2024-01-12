@@ -1,7 +1,7 @@
 locals {
   name                = var.name
   domain              = var.domain
-
+  zone                = var.zone
   create_namespace = var.create_namespace
   namespace        = var.namespace
   overrides        = var.overrides
@@ -36,6 +36,9 @@ resource "helm_release" "this" {
           type = local.solver_type
           existingSecret = local.solver_type == "cloudflare" ? kubernetes_secret.auth[0].metadata[0].name : ""
         }
+      }
+      cloudflare = {
+        zone = local.zone
       }
     }),
     yamlencode(local.overrides),

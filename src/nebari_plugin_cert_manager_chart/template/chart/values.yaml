@@ -22,7 +22,7 @@ issuers:
     existingSecret: ""
 
 cloudflare:
-  zone: metrostar.cloud
+  zone: "<placeholder>"
   email: sblair@metrostarsystems.com
 
 cert-manager:

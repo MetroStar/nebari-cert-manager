@@ -8,6 +8,11 @@ variable "domain" {
   type        = string
 }
 
+variable "zone" {
+  description = "Zone"
+  type        = string
+}
+
 variable "create_namespace" {
   type = bool
 }
