@@ -23,7 +23,7 @@ class CertManagerStage(NebariTerraformStage):
 
     def input_vars(self, stage_outputs: Dict[str, Dict[str, Any]]):
         domain = stage_outputs["stages/04-kubernetes-ingress"]["domain"]
-        zone = domain.split(".")[-2:]
+        zone = ".".join(domain.split(".")[-2:])
         chart_ns = self.config.cert_manager.namespace
         create_ns = True
         if chart_ns == None or chart_ns == "" or chart_ns == self.config.namespace:
