@@ -10,14 +10,14 @@ locals {
   issuers = var.issuers
   overrides        = var.overrides
 
-  chart_namespace = local.create_namespace ? kubernetes_namespace.this[0].metadata[0].name : local.namespace
+  chart_namespace = local.create_chart_namespace ? kubernetes_namespace.this[0].metadata[0].name : local.namespace
 }
 
 resource "kubernetes_namespace" "this" {
-  count = local.create_namespace ? 1 : 0
+  count = local.create_chart_namespace ? 1 : 0
 
   metadata {
-    name = local.namespace
+    name = local.chart_namespace
   }
 }
 
