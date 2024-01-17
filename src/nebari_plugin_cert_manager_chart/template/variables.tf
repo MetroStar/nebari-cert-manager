@@ -27,6 +27,11 @@ variable "namespace" {
   type = string
 }
 
+variable "solver_type" {
+  description = "Solver Type for ACME Challenge"
+  type = string
+}
+
 variable "certificates" {
   type = list(object({
     issuer = string

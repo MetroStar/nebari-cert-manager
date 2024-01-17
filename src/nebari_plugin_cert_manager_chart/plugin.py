@@ -39,6 +39,7 @@ class CertManagerStage(NebariTerraformStage):
             "create_chart_namespace": create_ns,
             "chart_namespace": chart_ns,
             "namespace": self.config.namespace,
+            "solver_type": self.config.dns.provider,
             "certificates": self.config.cert_manager.certificates,
             "issuers": self.config.cert_manager.issuers,
             "overrides": self.config.cert_manager.values
