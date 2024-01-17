@@ -5,7 +5,6 @@ locals {
   create_chart_namespace = var.create_chart_namespace
   chart_namespace = var.chart_namespace
   namespace        = var.namespace
-  solver_type = var.solver_type
   certificates = var.certificates
   issuers = var.issuers
   overrides        = var.overrides

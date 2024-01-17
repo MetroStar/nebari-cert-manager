@@ -34,6 +34,7 @@ variable "solver_type" {
 
 variable "certificates" {
   type = list(object({
+    name = string
     issuer = string
   }))
 }
@@ -44,6 +45,7 @@ variable "issuers" {
     type = string
     keyId = string
     existingSecret = string
+    solver = string
   }))
 }
 
