@@ -44,17 +44,31 @@ resource "helm_release" "this" {
 
   values = [
     yamlencode({
-      certificates = {
-        dnsNames = [local.domain, *.${local.domain}]
-      }
-      issuers = {
-        solver = {
-          type = local.solver_type
-          existingSecret = local.solver_type == "cloudflare" ? kubernetes_secret.cloudflare-apikey.metadata[0].name : ""
+      certificates = [
+        for certificate in local.certificates : {
+          name = certificate.name
+          namespace = local.namespace
+          issuer = certificate.issuer
+          dnsNames = [local.domain, *.${local.domain}]
         }
-      }
+      ]
+      issuers = [
+        for issuer in local.issuers : {
+          name = issuer.name
+          namespace = local.namespace
+          type = issuer.type
+          email = local.email
+          keyId = issuer.keyId
+          existingSecret = issuer.existingSecret
+          solver = {
+            type = local.solver_type
+            existingSecret = local.solver_type == "cloudflare" ? kubernetes_secret.cloudflare-apikey.metadata[0].name : ""
+          }
+        }
+      ]
       cloudflare = {
         zone = local.zone
+        email = local.email
       }
     }),
     yamlencode(local.overrides),
