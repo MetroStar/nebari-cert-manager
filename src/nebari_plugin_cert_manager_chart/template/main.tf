@@ -2,11 +2,13 @@ locals {
   name                = var.name
   domain              = var.domain
   zone                = var.zone
-  create_namespace = var.create_namespace
+  create_chart_namespace = var.create_chart_namespace
+  chart_namespace = var.chart_namespace
   namespace        = var.namespace
-  overrides        = var.overrides
-
   solver_type = var.solver_type
+  certificates = var.certificates
+  issuers = var.issuers
+  overrides        = var.overrides
 
   chart_namespace = local.create_namespace ? kubernetes_namespace.this[0].metadata[0].name : local.namespace
 }
