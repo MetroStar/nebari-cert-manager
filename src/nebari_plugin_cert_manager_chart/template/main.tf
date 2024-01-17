@@ -5,6 +5,7 @@ locals {
   create_chart_namespace = var.create_chart_namespace
   chart_namespace = var.chart_namespace
   namespace        = var.namespace
+  solver_type = var.solver_type
   certificates = var.certificates
   issuers = var.issuers
   overrides        = var.overrides
@@ -17,6 +18,19 @@ resource "kubernetes_namespace" "this" {
 
   metadata {
     name = local.chart_namespace
+  }
+}
+
+resource "kubernetes_secret" "cloudflare-apikey" {
+  count = local.solver_type == "cloudflare" ? 1 : 0
+
+  metadata {
+    name      = "cloudflare-apikey"
+    namespace = local.namespace
+  }
+
+  data = {
+    key     = local.key
   }
 }
 
