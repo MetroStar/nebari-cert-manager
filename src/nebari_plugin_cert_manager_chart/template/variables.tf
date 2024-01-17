@@ -49,7 +49,6 @@ variable "issuers" {
     type = string
     keyId = string
     existingSecret = string
-    solver = string
   }))
 }
 
