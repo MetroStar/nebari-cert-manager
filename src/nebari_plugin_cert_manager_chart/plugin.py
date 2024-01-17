@@ -9,7 +9,9 @@ class CertManagerSolverConfig(Base):
 class CertManagerConfig(Base):
     name: Optional[str] = "cert-manager"
     namespace: Optional[str] = None
-    solver: CertManagerSolverConfig = CertManagerSolverConfig()
+    email: Optional[str] = None
+    certificates: Optional[List[str, Any]] = []
+    issuers: Optional[List[str, Any]] = []
     values: Optional[Dict[str, Any]] = {}
 
 class InputSchema(Base):
@@ -35,8 +37,10 @@ class CertManagerStage(NebariTerraformStage):
             "domain": domain,
             "zone": zone,
             "create_namespace": create_ns,
-            "namespace": chart_ns,
-            "overrides": self.config.cert_manager.values,
-            "solver_type": self.config.cert_manager.solver.type
+            "chart_namespace": chart_ns,
+            "namespace": self.config.namespace,
+            "certificates": self.config.cert_manager.certificates,
+            "issuers": self.config.cert_manager.issuers,
+            "overrides": self.config.cert_manager.values
         }
         
