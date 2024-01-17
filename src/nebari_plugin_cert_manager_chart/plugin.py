@@ -10,9 +10,9 @@ class CertManagerConfig(Base):
     name: Optional[str] = "cert-manager"
     namespace: Optional[str] = None
     email: Optional[str] = None
-    certificates: Optional[List[str, Any]] = []
-    issuers: Optional[List[str, Any]] = []
-    values: Optional[Dict[str, Any]] = {}
+    certificates: Optional[list[str, Any]] = []
+    issuers: Optional[list[str, Any]] = []
+    values: Optional[dict[str, Any]] = {}
 
 class InputSchema(Base):
     cert_manager: CertManagerConfig = CertManagerConfig()
