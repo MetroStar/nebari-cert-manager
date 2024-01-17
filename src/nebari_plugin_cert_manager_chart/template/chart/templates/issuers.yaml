@@ -2,12 +2,6 @@
 
 {{- if eq "cloudflare" .solver.type }}
 
-{{- $secretName := .solver.existingSecret }}
-
-{{- if not $secretName }}
-{{- $secretName = (printf "cloudflare-apikey" onyx) }}
-{{- end }}
-
 {{- if eq .type "zerossl" }}
 
 ---
@@ -35,7 +29,7 @@ spec:
         cloudflare:
           email: {{ $.Values.cloudflare.email | quote }}
           apiTokenSecretRef:
-            name: {{ $secretName }}
+            name: {{ .solver.existingSecret }}
             key: key
 
 {{- else }}
@@ -60,7 +54,7 @@ spec:
         cloudflare:
           email: {{ $.Values.cloudflare.email | quote }}
           apiTokenSecretRef:
-            name: {{ $secretName }}
+            name: {{ .solver.existingSecret }}
             key: key
 
 {{- end }}
@@ -68,13 +62,3 @@ spec:
 {{- end }}
 
 {{- end }}
-
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: cloudflare-apikey
-  namespace: onyx
-type: Opaque
-stringData:
-  key: ${CLOUDFLARE_TOKEN}

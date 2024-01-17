@@ -39,6 +39,10 @@ variable "certificates" {
   }))
 }
 
+variable "apikey" {
+  type = string
+}
+
 variable "issuers" {
   type = list(object({
     name = string

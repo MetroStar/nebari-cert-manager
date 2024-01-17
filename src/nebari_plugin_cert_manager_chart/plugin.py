@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional
+import os
 
 from nebari.schema import Base
 from _nebari.stages.base import NebariTerraformStage
@@ -41,6 +42,7 @@ class CertManagerStage(NebariTerraformStage):
             "namespace": self.config.namespace,
             "solver_type": self.config.dns.provider,
             "certificates": self.config.cert_manager.certificates,
+            "apikey": os.environ.get("CLOUDFLARE_TOKEN", ""),
             "issuers": self.config.cert_manager.issuers,
             "overrides": self.config.cert_manager.values
         }

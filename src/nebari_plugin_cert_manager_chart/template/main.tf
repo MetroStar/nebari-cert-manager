@@ -7,6 +7,7 @@ locals {
   namespace        = var.namespace
   solver_type = var.solver_type
   certificates = var.certificates
+  apikey = var.apikey
   issuers = var.issuers
   overrides        = var.overrides
 
@@ -30,7 +31,7 @@ resource "kubernetes_secret" "cloudflare-apikey" {
   }
 
   data = {
-    key     = local.key
+    key     = local.apikey
   }
 }
 
@@ -49,7 +50,7 @@ resource "helm_release" "this" {
       issuers = {
         solver = {
           type = local.solver_type
-          existingSecret = local.solver_type == "cloudflare" ? kubernetes_secret.auth[0].metadata[0].name : ""
+          existingSecret = local.solver_type == "cloudflare" ? kubernetes_secret.cloudflare-apikey.metadata[0].name : ""
         }
       }
       cloudflare = {
