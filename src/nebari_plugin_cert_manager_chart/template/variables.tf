@@ -13,7 +13,7 @@ variable "zone" {
   type        = string
 }
 
-variable "create_namespace" {
+variable "create_chart_namespace" {
   type = bool
 }
 
