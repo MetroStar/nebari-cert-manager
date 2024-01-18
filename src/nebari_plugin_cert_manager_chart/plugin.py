@@ -4,14 +4,13 @@ import os
 from nebari.schema import Base
 from _nebari.stages.base import NebariTerraformStage
 
-class CertManagerDnsConfig(Base):
-    provider: Optional[str] = "cloudflare"
+class CertManagerSolverConfig(Base):
+    type: Optional[str] = "cloudflare"
 
 class CertManagerConfig(Base):
     name: Optional[str] = "cert-manager"
     namespace: Optional[str] = None
     email: Optional[str] = None
-    dns: CertManagerDnsConfig = CertManagerDnsConfig()
     certificates: Optional[List[Any]] = []
     issuers: Optional[List[Any]] = []
     values: Optional[Dict[str, Any]] = {}
