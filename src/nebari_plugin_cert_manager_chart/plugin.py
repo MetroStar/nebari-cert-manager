@@ -4,9 +4,6 @@ import os
 from nebari.schema import Base
 from _nebari.stages.base import NebariTerraformStage
 
-class CertManagerSolverConfig(Base):
-    type: Optional[str] = "cloudflare"
-
 class CertManagerConfig(Base):
     name: Optional[str] = "cert-manager"
     namespace: Optional[str] = None
