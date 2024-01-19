@@ -1,17 +1,20 @@
 locals {
-  name             = var.name
-  domain           = var.domain
-  zone             = var.zone
-  create_namespace = var.create_namespace
-  namespace        = var.namespace
-  email            = var.email
-  solver           = var.solver
-  certificates     = var.certificates
-  apikey           = var.apikey
-  issuers          = var.issuers
-  overrides        = var.overrides
+  name                        = var.name
+  domain                      = var.domain
+  zone                        = var.zone
+  create_namespace            = var.create_namespace
+  namespace                   = var.namespace
+  create_components_namespace = var.create_namespace
+  comp_namespace              = var.namespace
+  email                       = var.email
+  solver                      = var.solver
+  certificates                = var.certificates
+  apikey                      = var.apikey
+  issuers                     = var.issuers
+  overrides                   = var.overrides
 
-  chart_namespace = local.create_namespace ? kubernetes_namespace.this[0].metadata[0].name : local.namespace
+  chart_namespace      = local.create_namespace ? kubernetes_namespace.this[0].metadata[0].name : local.namespace
+  components_namespace = local.create_components_namespace ? kubernetes_namespace.components[0].metadata[0].name : local.chart_namespace
 }
 
 resource "kubernetes_namespace" "this" {
@@ -22,12 +25,20 @@ resource "kubernetes_namespace" "this" {
   }
 }
 
+resource "kubernetes_namespace" "components" {
+  count = local.create_components_namespace ? 1 : 0
+
+  metadata {
+    name = local.comp_namespace
+  }
+}
+
 resource "kubernetes_secret" "cloudflare-apikey" {
   count = local.solver == "cloudflare" ? 1 : 0
 
   metadata {
     name      = "cloudflare-apikey"
-    namespace = local.issuers[0].namespace
+    namespace = local.components_namespace
   }
 
   data = {
@@ -47,7 +58,7 @@ resource "helm_release" "this" {
       certificates = [
         for certificate in local.certificates : {
           name      = certificate.name
-          namespace = certificate.namespace
+          namespace = local.components_namespace
           issuer    = certificate.issuer
           dnsNames  = [local.domain, "*.${local.domain}"]
         }
@@ -55,7 +66,7 @@ resource "helm_release" "this" {
       issuers = [
         for issuer in local.issuers : {
           name           = issuer.name
-          namespace      = issuer.namespace
+          namespace      = local.components_namespace
           type           = issuer.type
           email          = local.email
           keyId          = issuer.keyId

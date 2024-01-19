@@ -21,6 +21,14 @@ variable "namespace" {
   type = string
 }
 
+variable "create_components_namespace" {
+  type = bool
+}
+
+variable "comp_namespace" {
+  type = string
+}
+
 variable "email" {
   type = string
 }
@@ -32,9 +40,8 @@ variable "solver" {
 
 variable "certificates" {
   type = list(object({
-    name      = string
-    namespace = string
-    issuer    = string
+    name   = string
+    issuer = string
   }))
 }
 
@@ -45,7 +52,6 @@ variable "apikey" {
 variable "issuers" {
   type = list(object({
     name           = string
-    namespace      = string
     type           = string
     keyId          = string
     existingSecret = string
