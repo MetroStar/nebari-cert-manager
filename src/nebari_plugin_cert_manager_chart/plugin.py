@@ -11,7 +11,7 @@ class CertManagerConfig(Base):
     solver: Optional[str] = None
     certificates: Optional[List[Any]] = []
     issuers: Optional[List[Any]] = []
-    values: Optional[Dict[str, Dict[str, Any]]] = {}
+    values: Optional[Dict[str, Any]] = {}
 
 class InputSchema(Base):
     cert_manager: CertManagerConfig = CertManagerConfig()
