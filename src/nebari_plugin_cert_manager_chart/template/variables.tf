@@ -23,14 +23,14 @@ variable "namespace" {
 
 variable "solver" {
   description = "Solver Type for ACME Challenge"
-  type = string
+  type        = string
 }
 
 variable "certificates" {
   type = list(object({
-    name = string
+    name      = string
     namespace = string
-    issuer = string
+    issuer    = string
   }))
 }
 
@@ -40,10 +40,10 @@ variable "apikey" {
 
 variable "issuers" {
   type = list(object({
-    name = string
-    namespace = string
-    type = string
-    keyId = string
+    name           = string
+    namespace      = string
+    type           = string
+    keyId          = string
     existingSecret = string
   }))
 }

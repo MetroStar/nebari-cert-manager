@@ -1,13 +1,13 @@
 locals {
-  name                = var.name
-  domain              = var.domain
-  zone                = var.zone
+  name             = var.name
+  domain           = var.domain
+  zone             = var.zone
   create_namespace = var.create_namespace
   namespace        = var.namespace
-  solver = var.solver
-  certificates = var.certificates
-  apikey = var.apikey
-  issuers = var.issuers
+  solver           = var.solver
+  certificates     = var.certificates
+  apikey           = var.apikey
+  issuers          = var.issuers
   overrides        = var.overrides
 
   chart_namespace = local.create_namespace ? kubernetes_namespace.this[0].metadata[0].name : local.namespace
@@ -30,7 +30,7 @@ resource "kubernetes_secret" "cloudflare-apikey" {
   }
 
   data = {
-    key     = local.apikey
+    key = local.apikey
   }
 }
 
@@ -45,28 +45,28 @@ resource "helm_release" "this" {
     yamlencode({
       certificates = [
         for certificate in local.certificates : {
-          name = certificate.name
+          name      = certificate.name
           namespace = certificate.namespace
-          issuer = certificate.issuer
-          dnsNames = [local.domain, "*.${local.domain}"]
+          issuer    = certificate.issuer
+          dnsNames  = [local.domain, "*.${local.domain}"]
         }
       ]
       issuers = [
         for issuer in local.issuers : {
-          name = issuer.name
-          namespace = issuer.namespace
-          type = issuer.type
-          email = local.email
-          keyId = issuer.keyId
+          name           = issuer.name
+          namespace      = issuer.namespace
+          type           = issuer.type
+          email          = local.email
+          keyId          = issuer.keyId
           existingSecret = issuer.existingSecret
           solver = {
-            type = local.solver
+            type           = local.solver
             existingSecret = local.solver == "cloudflare" ? kubernetes_secret.cloudflare-apikey.metadata[0].name : ""
           }
         }
       ]
       cloudflare = {
-        zone = local.zone
+        zone  = local.zone
         email = local.email
       }
     }),
