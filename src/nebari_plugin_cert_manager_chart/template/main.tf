@@ -17,7 +17,7 @@ resource "kubernetes_namespace" "this" {
   count = local.create_namespace ? 1 : 0
 
   metadata {
-    name = local.issuers[0].namespace
+    name = local.namespace
   }
 }
 
@@ -26,7 +26,7 @@ resource "kubernetes_secret" "cloudflare-apikey" {
 
   metadata {
     name      = "cloudflare-apikey"
-    namespace = local.namespace
+    namespace = local.issuers[0].namespace
   }
 
   data = {
