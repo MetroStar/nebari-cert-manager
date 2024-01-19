@@ -53,6 +53,6 @@ variable "issuers" {
 }
 
 variable "overrides" {
-  type    = map(any)
+  type    = any
   default = {}
 }
