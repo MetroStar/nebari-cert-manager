@@ -10,7 +10,7 @@ locals {
   issuers = var.issuers
   overrides        = var.overrides
 
-  namespace = local.create_namespace ? kubernetes_namespace.this[0].metadata[0].name : local.namespace
+  chart_namespace = local.create_namespace ? kubernetes_namespace.this[0].metadata[0].name : local.namespace
 }
 
 resource "kubernetes_namespace" "this" {
@@ -37,7 +37,7 @@ resource "kubernetes_secret" "cloudflare-apikey" {
 resource "helm_release" "this" {
   name      = local.name
   chart     = "./chart"
-  namespace = local.namespace
+  namespace = local.chart_namespace
 
   dependency_update = true
 
