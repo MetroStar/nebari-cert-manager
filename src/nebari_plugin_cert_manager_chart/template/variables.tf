@@ -13,17 +13,11 @@ variable "zone" {
   type        = string
 }
 
-variable "create_chart_namespace" {
+variable "create_namespace" {
   type = bool
 }
 
-variable "chart_namespace" {
-  description = "Namespace of Helm Release"
-  type = string
-}
-
 variable "namespace" {
-  description = "Namespace of Secret, Issuers, and Certificates"
   type = string
 }
 
@@ -35,6 +29,7 @@ variable "solver" {
 variable "certificates" {
   type = list(object({
     name = string
+    namespace = string
     issuer = string
   }))
 }
@@ -46,6 +41,7 @@ variable "apikey" {
 variable "issuers" {
   type = list(object({
     name = string
+    namespace = string
     type = string
     keyId = string
     existingSecret = string

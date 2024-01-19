@@ -23,7 +23,7 @@ def test_default_namespace():
 
     stage_outputs = get_stage_outputs()
     result = sut.input_vars(stage_outputs)
-    assert result["create_chart_namespace"] == False
+    assert result["create_namespace"] == False
     assert result["namespace"] == "nebari-ns"
 
 def test_chart_namespace():
@@ -32,8 +32,8 @@ def test_chart_namespace():
 
     stage_outputs = get_stage_outputs()
     result = sut.input_vars(stage_outputs)
-    assert result["create_chart_namespace"] == True
-    assert result["chart_namespace"] == "cert-manager-ns"
+    assert result["create_namespace"] == True
+    assert result["namespace"] == "cert-manager-ns"
 
 def test_chart_overrides():
     config = TestConfig(namespace = "nebari-ns", domain = "my-test-domain.com", cert_manager = CertManagerConfig(values = { "foo": "bar" }))

@@ -2,8 +2,7 @@ locals {
   name                = var.name
   domain              = var.domain
   zone                = var.zone
-  create_chart_namespace = var.create_chart_namespace
-  chart_namespace = var.chart_namespace
+  create_namespace = var.create_namespace
   namespace        = var.namespace
   solver = var.solver
   certificates = var.certificates
@@ -11,14 +10,14 @@ locals {
   issuers = var.issuers
   overrides        = var.overrides
 
-  chart_namespace = local.create_chart_namespace ? kubernetes_namespace.this[0].metadata[0].name : local.namespace
+  namespace = local.create_namespace ? kubernetes_namespace.this[0].metadata[0].name : local.namespace
 }
 
 resource "kubernetes_namespace" "this" {
-  count = local.create_chart_namespace ? 1 : 0
+  count = local.create_namespace ? 1 : 0
 
   metadata {
-    name = local.chart_namespace
+    name = local.issuers[0].namespace
   }
 }
 
@@ -38,7 +37,7 @@ resource "kubernetes_secret" "cloudflare-apikey" {
 resource "helm_release" "this" {
   name      = local.name
   chart     = "./chart"
-  namespace = local.chart_namespace
+  namespace = local.namespace
 
   dependency_update = true
 
@@ -47,7 +46,7 @@ resource "helm_release" "this" {
       certificates = [
         for certificate in local.certificates : {
           name = certificate.name
-          namespace = local.namespace
+          namespace = certificate.namespace
           issuer = certificate.issuer
           dnsNames = [local.domain, *.${local.domain}]
         }
@@ -55,7 +54,7 @@ resource "helm_release" "this" {
       issuers = [
         for issuer in local.issuers : {
           name = issuer.name
-          namespace = local.namespace
+          namespace = issuer.namespace
           type = issuer.type
           email = local.email
           keyId = issuer.keyId
