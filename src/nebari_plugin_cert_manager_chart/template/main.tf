@@ -5,7 +5,7 @@ locals {
   create_namespace            = var.create_namespace
   namespace                   = var.namespace
   create_components_namespace = var.create_namespace
-  comp_namespace              = var.namespace
+  comp_namespace              = var.comp_namespace
   email                       = var.email
   solver                      = var.solver
   certificates                = var.certificates
