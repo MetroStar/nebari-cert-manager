@@ -4,6 +4,7 @@ locals {
   zone             = var.zone
   create_namespace = var.create_namespace
   namespace        = var.namespace
+  email            = var.email
   solver           = var.solver
   certificates     = var.certificates
   apikey           = var.apikey

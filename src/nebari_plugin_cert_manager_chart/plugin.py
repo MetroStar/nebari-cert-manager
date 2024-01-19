@@ -37,6 +37,7 @@ class CertManagerStage(NebariTerraformStage):
             "zone": zone,
             "create_namespace": create_ns,
             "namespace": chart_ns,
+            "email": self.config.cert_manager.email,
             "solver": self.config.cert_manager.solver,
             "certificates": self.config.cert_manager.certificates,
             "apikey": os.environ.get("CLOUDFLARE_TOKEN", ""),

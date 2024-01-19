@@ -21,6 +21,10 @@ variable "namespace" {
   type = string
 }
 
+variable "email" {
+  type = string
+}
+
 variable "solver" {
   description = "Solver Type for ACME Challenge"
   type        = string
