@@ -61,7 +61,7 @@ resource "helm_release" "this" {
           existingSecret = issuer.existingSecret
           solver = {
             type           = local.solver
-            existingSecret = local.solver == "cloudflare" ? kubernetes_secret.cloudflare-apikey.metadata[0].name : ""
+            existingSecret = local.solver == "cloudflare" ? kubernetes_secret.cloudflare-apikey[0].metadata[0].name : ""
           }
         }
       ]
