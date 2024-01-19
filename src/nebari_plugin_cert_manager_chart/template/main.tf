@@ -5,7 +5,7 @@ locals {
   create_chart_namespace = var.create_chart_namespace
   chart_namespace = var.chart_namespace
   namespace        = var.namespace
-  solver_type = var.solver_type
+  solver = var.solver
   certificates = var.certificates
   apikey = var.apikey
   issuers = var.issuers
@@ -23,7 +23,7 @@ resource "kubernetes_namespace" "this" {
 }
 
 resource "kubernetes_secret" "cloudflare-apikey" {
-  count = local.solver_type == "cloudflare" ? 1 : 0
+  count = local.solver == "cloudflare" ? 1 : 0
 
   metadata {
     name      = "cloudflare-apikey"
@@ -61,8 +61,8 @@ resource "helm_release" "this" {
           keyId = issuer.keyId
           existingSecret = issuer.existingSecret
           solver = {
-            type = local.solver_type
-            existingSecret = local.solver_type == "cloudflare" ? kubernetes_secret.cloudflare-apikey.metadata[0].name : ""
+            type = local.solver
+            existingSecret = local.solver == "cloudflare" ? kubernetes_secret.cloudflare-apikey.metadata[0].name : ""
           }
         }
       ]

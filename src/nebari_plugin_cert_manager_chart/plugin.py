@@ -4,13 +4,11 @@ import os
 from nebari.schema import Base
 from _nebari.stages.base import NebariTerraformStage
 
-class CertManagerSolverConfig(Base):
-    type: Optional[str] = "cloudflare"
-
 class CertManagerConfig(Base):
     name: Optional[str] = "cert-manager"
     namespace: Optional[str] = None
     email: Optional[str] = None
+    solver: Optional[str] = None
     certificates: Optional[List[Any]] = []
     issuers: Optional[List[Any]] = []
     values: Optional[Dict[str, Any]] = {}
@@ -40,7 +38,7 @@ class CertManagerStage(NebariTerraformStage):
             "create_chart_namespace": create_ns,
             "chart_namespace": chart_ns,
             "namespace": self.config.namespace,
-            "solver_type": self.config.dns.provider,
+            "solver": self.config.cert_manager.solver,
             "certificates": self.config.cert_manager.certificates,
             "apikey": os.environ.get("CLOUDFLARE_TOKEN", ""),
             "issuers": self.config.cert_manager.issuers,

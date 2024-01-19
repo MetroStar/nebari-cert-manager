@@ -27,7 +27,7 @@ variable "namespace" {
   type = string
 }
 
-variable "solver_type" {
+variable "solver" {
   description = "Solver Type for ACME Challenge"
   type = string
 }
