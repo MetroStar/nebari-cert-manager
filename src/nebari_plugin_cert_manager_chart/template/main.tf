@@ -48,7 +48,7 @@ resource "helm_release" "this" {
           name = certificate.name
           namespace = certificate.namespace
           issuer = certificate.issuer
-          dnsNames = [local.domain, *.${local.domain}]
+          dnsNames = [local.domain, "*.${local.domain}"]
         }
       ]
       issuers = [
