@@ -10,6 +10,7 @@ class CertManagerConfig(Base):
     email: Optional[str] = None
     solver: Optional[str] = None
     components_namespace: Optional[str] = None
+    staging: Optional[str] = None
     certificates: Optional[List[Any]] = []
     issuers: Optional[List[Any]] = []
     values: Optional[Dict[str, Any]] = {}
@@ -47,6 +48,7 @@ class CertManagerStage(NebariTerraformStage):
             "comp_namespace": comp_ns,
             "email": self.config.cert_manager.email,
             "solver": self.config.cert_manager.solver,
+            "staging": self.config.cert_manager.staging.lower().capitalize() == "True",
             "certificates": self.config.cert_manager.certificates,
             "apikey": os.environ.get("CLOUDFLARE_TOKEN", ""),
             "issuers": self.config.cert_manager.issuers,

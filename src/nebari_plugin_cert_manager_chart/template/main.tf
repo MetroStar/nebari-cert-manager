@@ -8,6 +8,7 @@ locals {
   comp_namespace              = var.comp_namespace
   email                       = var.email
   solver                      = var.solver
+  staging                     = var.staging
   certificates                = var.certificates
   apikey                      = var.apikey
   issuers                     = var.issuers
@@ -68,6 +69,7 @@ resource "helm_release" "this" {
           name           = issuer.name
           namespace      = local.components_namespace
           type           = issuer.type
+          server         = local.staging && issuer.type == "letsencrypt" ? "https://acme-staging-v02.api.letsencrypt.org/directory" : "https://acme-v02.api.letsencrypt.org/directory"
           email          = local.email
           keyId          = issuer.keyId
           existingSecret = issuer.existingSecret

@@ -38,6 +38,10 @@ variable "solver" {
   type        = string
 }
 
+variable "staging" {
+  type = bool
+}
+
 variable "certificates" {
   type = list(object({
     name   = string
