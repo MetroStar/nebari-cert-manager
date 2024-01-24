@@ -69,7 +69,14 @@ resource "helm_release" "this" {
           name           = issuer.name
           namespace      = local.components_namespace
           type           = issuer.type
-          server         = local.staging && issuer.type == "letsencrypt" ? "https://acme-staging-v02.api.letsencrypt.org/directory" : "https://acme-v02.api.letsencrypt.org/directory"
+          server         = (
+            (issuer.type == "zerossl") ?
+              "https://acme.zerossl.com/v2/DV90" :
+            (local.staging && issuer.type == "letsencrypt" ?
+              "https://acme-staging-v02.api.letsencrypt.org/directory" :
+              "https://acme-v02.api.letsencrypt.org/directory"
+            )
+          )
           email          = local.email
           keyId          = issuer.keyId
           existingSecret = issuer.existingSecret

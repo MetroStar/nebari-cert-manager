@@ -12,7 +12,7 @@ metadata:
   namespace: {{ .namespace }}
 spec:
   acme:
-    server: https://acme.zerossl.com/v2/DV90
+    server: {{ .server }}
     email: {{ .email | default $.Values.cloudflare.email | quote }}
     privateKeySecretRef:
       name: {{ .name }}
