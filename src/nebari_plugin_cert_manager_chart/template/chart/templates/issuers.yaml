@@ -42,7 +42,7 @@ metadata:
   namespace: {{ .namespace }}
 spec:
   acme:
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: {{ .server }}
     email: {{ .email | default $.Values.cloudflare.email | quote }}
     privateKeySecretRef:
       name: {{ .name }}
