@@ -47,7 +47,7 @@ resource "kubernetes_secret" "cloudflare-apikey" {
 }
 
 resource "helm_release" "this" {
-  name      = local.name
+  name      = local.chart_namespace
   chart     = "./chart"
   namespace = local.chart_namespace
 
