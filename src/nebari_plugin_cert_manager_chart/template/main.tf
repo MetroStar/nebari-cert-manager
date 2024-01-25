@@ -1,5 +1,4 @@
 locals {
-  name                        = var.name
   domain                      = var.domain
   zone                        = var.zone
   create_namespace            = var.create_namespace

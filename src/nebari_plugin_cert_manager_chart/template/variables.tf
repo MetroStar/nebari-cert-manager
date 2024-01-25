@@ -1,15 +1,8 @@
-variable "name" {
-  description = "Chart name"
-  type        = string
-}
-
 variable "domain" {
-  description = "Domain"
   type        = string
 }
 
 variable "zone" {
-  description = "Zone"
   type        = string
 }
 
@@ -34,7 +27,6 @@ variable "email" {
 }
 
 variable "solver" {
-  description = "Solver Type for ACME Challenge"
   type        = string
 }
 
