@@ -18,6 +18,7 @@ class InputSchema(Base):
     cert_manager: CertManagerConfig = CertManagerConfig()
 
 class CertManagerStage(NebariTerraformStage):
+    name = "cert-manager"
     priority = 100
 
     input_schema = InputSchema
