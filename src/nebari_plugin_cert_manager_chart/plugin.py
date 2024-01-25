@@ -5,12 +5,11 @@ from nebari.schema import Base
 from _nebari.stages.base import NebariTerraformStage
 
 class CertManagerConfig(Base):
-    name: Optional[str] = "cert-manager"
-    namespace: Optional[str] = None
+    namespace: Optional[str] = "cert-manager"
     email: Optional[str] = None
-    solver: Optional[str] = None
-    components_namespace: Optional[str] = None
-    staging: Optional[str] = None
+    solver: Optional[str] = "cloudflare"
+    components_namespace: Optional[str] = "onyx"
+    staging: Optional[str] = "false"
     certificates: Optional[List[Any]] = []
     issuers: Optional[List[Any]] = []
     values: Optional[Dict[str, Any]] = {}
@@ -19,7 +18,6 @@ class InputSchema(Base):
     cert_manager: CertManagerConfig = CertManagerConfig()
 
 class CertManagerStage(NebariTerraformStage):
-    name = "cert-manager"
     priority = 100
 
     input_schema = InputSchema
@@ -39,7 +37,6 @@ class CertManagerStage(NebariTerraformStage):
             create_comp_ns = False
 
         return {
-            "name": self.config.cert_manager.name,
             "domain": domain,
             "zone": zone,
             "create_namespace": create_ns,
