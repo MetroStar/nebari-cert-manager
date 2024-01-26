@@ -65,12 +65,12 @@ resource "helm_release" "this" {
       ]
       issuers = [
         for issuer in local.issuers : {
-          name           = issuer.name
-          namespace      = local.components_namespace
-          type           = issuer.type
-          server         = (
+          name      = issuer.name
+          namespace = local.components_namespace
+          type      = issuer.type
+          server = (
             (issuer.type == "zerossl") ?
-              "https://acme.zerossl.com/v2/DV90" :
+            "https://acme.zerossl.com/v2/DV90" :
             (local.staging && issuer.type == "letsencrypt" ?
               "https://acme-staging-v02.api.letsencrypt.org/directory" :
               "https://acme-v02.api.letsencrypt.org/directory"

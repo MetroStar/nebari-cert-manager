@@ -1,9 +1,9 @@
 variable "domain" {
-  type        = string
+  type = string
 }
 
 variable "zone" {
-  type        = string
+  type = string
 }
 
 variable "create_namespace" {
@@ -27,7 +27,7 @@ variable "email" {
 }
 
 variable "solver" {
-  type        = string
+  type = string
 }
 
 variable "staging" {
