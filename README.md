@@ -42,16 +42,14 @@ Configuration of the cert-manager plugin is controlled through the `cert_manager
 
 ``` yaml
 cert_manager:
-  # helm release name and namespace - default cert-manager
+  # helm release name and namespace - default default (nebari global namespace)
   namespace: cert-manager
   # email address to be associated with the ACME account
   email: sblair@metrostar.com
   # API to manage DNS01 ACME challenge records - default cloudflare
   solver: cloudflare
-  # namespace of issuers, certificates, and cloudflare-apikey secret - default onyx
-  components_namespace: onyx
   # whether to use ACME server's staging or production endpoint - default false
-  staging: true
+  staging: false
   # list of certificate resources to be created
   certificates:
     # name of certificate
@@ -77,7 +75,6 @@ The following configuration values apply to the internally managed terraform mod
 
 - `domain`, `zone`: Domain and zone for the plugin's deployment.
 - `create_namespace`, `namespace`: Helm release's namespace configuration.
-- `create_components_namespace`, `comp_namespace`: Kubernetes namespace configuration for certificates, issuers, secret.
 - `email`: Cloudflare email address.
 - `solver`: Solver type.
 - `staging`: Flag to use staging or production endpoint environment.
