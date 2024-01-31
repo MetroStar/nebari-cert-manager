@@ -2,37 +2,7 @@
 
 {{- if eq "cloudflare" .solver.type }}
 
-{{- if eq .type "zerossl" }}
-
----
-apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  name: {{ .name }}
-  namespace: {{ .namespace }}
-spec:
-  acme:
-    server: {{ .server }}
-    email: {{ .email | default $.Values.cloudflare.email | quote }}
-    privateKeySecretRef:
-      name: {{ .name }}
-    externalAccountBinding:
-      keyID: {{ .keyId }}
-      keySecretRef:
-        name: {{ .existingSecret }}
-        key: hmac-key
-    solvers:
-    - selector:
-        dnsZones:
-        - {{ $.Values.cloudflare.zone | quote }}
-      dns01:
-        cloudflare:
-          email: {{ $.Values.cloudflare.email | quote }}
-          apiTokenSecretRef:
-            name: {{ .solver.existingSecret }}
-            key: key
-
-{{- else }}
+{{- if eq "letsencrypt" .type }}
 
 ---
 apiVersion: cert-manager.io/v1
